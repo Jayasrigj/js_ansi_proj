@@ -1,0 +1,13 @@
+---
+- name: demonstrate file module
+  hosts: localhost
+  become: true
+  tasks:
+    - name: create a directory
+      file:
+        path: /etc/picsDir
+        state: touch
+        owner: root
+        group: ansible
+        mode: '0640'
+...        

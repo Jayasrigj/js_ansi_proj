@@ -1,0 +1,13 @@
+---
+- name: demonstrate file module
+  hosts: localhost
+  become: true
+  tasks:
+    - name: create an empty file
+      file:
+        path: /etc/new_gjs.txt
+        state: touch
+        owner: root
+        group: ansible
+        mode: '0640'
+...

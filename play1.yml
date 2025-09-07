@@ -1,0 +1,21 @@
+---
+- name: Play to create a group and then user
+  hosts: sapdev
+  become: true
+  tasks:
+    - name: Task1 - Create group
+      ansible.builtin.group:
+        name: sapdev
+        state: present
+
+    - name: Task2 - Create user and add the above created group as primary group
+      ansible.builtin.user:
+        name: js01
+        group: sapdev
+        comment: "js01 for sapdev project"
+        state: present
+        password: "$6$jsdhjkcvljpg$pnIEpAeibPywtoi.tQkl4xLCN2SZQ4nGMR9h0U9BbAA.3EjxVu0dXTOYSINB3ZGfWj8fkRimpQ3Iy783OKVKQ0"
+...        
+
+      
+
