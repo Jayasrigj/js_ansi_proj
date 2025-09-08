@@ -1,0 +1,13 @@
+---
+- name: play to work with lineinfile module.
+  # This is used to search for a pattern, insert or replace a line based on the pattern search
+  # This play searches for pattern SELINUX in /etc/selinux/config and replaces it with SELINUX=disabled
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Task to edit /etc/selinux/config file to disable SELinux
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: 'SELINUX=disabled'
+...

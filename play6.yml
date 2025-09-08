@@ -1,0 +1,15 @@
+---
+- name: demonstrate file module
+  hosts: localhost
+  become: true
+  tasks:
+   - name: create a hard link
+     file:
+      src: /etc/passwd
+      dest: /etc/passwd0
+      state: hard
+      #state: present
+      owner: root
+      group: ansible
+      mode: '0644'
+...

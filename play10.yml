@@ -1,0 +1,14 @@
+---
+- name: Demonstrate lineinfile - example2
+  hosts: localhost
+  become: true
+  tasks:
+    - name: create a file and add the line
+      lineinfile:
+        path: /home/ansible/statements.txt
+        line: "Every successful story is also a story of great failures"
+        state: present
+        create: true
+        owner: ansible
+        group: ansible
+...
