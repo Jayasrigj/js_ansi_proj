@@ -11,3 +11,4 @@
         group: ansible
         mode: '0640'
 ...
+a new line is added in play3.yml
