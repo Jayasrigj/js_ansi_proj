@@ -11,3 +11,5 @@
         regexp: '^SELINUX='
         line: 'SELINUX=disabled'
 ...
+ensures a particular line is in a file 
+replace an existing line using a back-referenced regular expression
