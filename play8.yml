@@ -32,3 +32,5 @@
         state: started
         enabled: yes
 ...
+yum- installs,updates or removes packages on rhel-based systems
+service- controls service (start,stop,restart,enable)
