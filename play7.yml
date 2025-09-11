@@ -33,3 +33,7 @@
         fstype: xfs
         state: mounted
 ...
+lvg- manages lvm volume groups..
+lvol- manages logical volumes..
+filesystem- creates a filesystem on a module..
+mount- mounts/umount filesystems..
