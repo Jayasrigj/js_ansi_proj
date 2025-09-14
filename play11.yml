@@ -9,3 +9,5 @@
         regexp: ^story
         state: absent
 ...
+replace an existing line using back referenced regular expression
+it ensures a particular line is in file or replaced ..
