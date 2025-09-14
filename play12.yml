@@ -1,0 +1,16 @@
+---
+- name: Demonstrate lineinfile - example4
+  hosts: localhost
+  become: true
+  tasks:
+    - name: replace the line in sshd_config
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^PermitRootLogin'
+        line: 'PermitRootLogin no'
+
+    - name: restart the sshd service
+      service:
+        name: sshd
+        state: restarted
+...

@@ -1,0 +1,11 @@
+---
+- name: Demonstrate lineinfile - example4
+  hosts: localhost
+  become: true
+  tasks:
+    - name: insert the line after the match
+      lineinfile:
+        path: /home/ansible/ansible/names.txt
+        line: "jayasri"
+        insertafter: 7
+...

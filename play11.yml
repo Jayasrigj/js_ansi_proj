@@ -1,0 +1,11 @@
+---
+- name: Demonstrate lineinfile - example2
+  hosts: localhost
+  become: true
+  tasks:
+    - name: remove the line 
+      lineinfile:
+        path: /home/ansible/statements.txt
+        regexp: ^story
+        state: absent
+...

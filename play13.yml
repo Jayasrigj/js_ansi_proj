@@ -1,0 +1,11 @@
+---
+- name: Demonstrate lineinfile - example4
+  hosts: localhost
+  become: true
+  tasks:
+    - name: insert the line before the match
+      lineinfile:
+        path: /home/ansible/ansible/names.txt
+        line: "This is jayasri"
+        insertbefore: ^harika
+...
