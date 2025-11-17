@@ -1,0 +1,27 @@
+---
+- name: play to demonstrate handlers in ansible
+  hosts: localhost 
+  become: true 
+  tasks: 
+   - name: include vars 
+     include_vars: vars/inclvar.yml
+   - name: install {{pkg_name2}} package 
+     yum: 
+      name: "{{pkg_name2}}"
+      state: latest 
+     notify: start_nfs
+#handler is processed with notify statement when chnage occurs in the tasks 
+#if no change occurs, handler will be ignored. ie handler will not be notified
+#when you notify the same handler multiple times, it runs only once.
+#handlers are invoked at the end of all tasks process.
+#they are processed in the same order they appear in the handler section and not in the order they
+#are notified.
+   - name: print me 
+     debug:
+      msg: "Hello Fusionnex" 
+  handlers:    
+    - name: start_nfs 
+      service: 
+       name: "{{ser_name}}"
+       state: started 
+...             

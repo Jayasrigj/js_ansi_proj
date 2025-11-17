@@ -1,0 +1,17 @@
+---
+- name: play to demonstrate stat module 
+  hosts: localhost 
+  become: true 
+  vars: 
+   fname: /etc/passwd 
+  tasks: 
+  - name: check if the file exists  
+    stat: 
+     path: "{{fname}}" 
+    register: out 
+  - name: print if the file exists 
+    debug:
+     var: out
+     msg: "File {{fname}}  does not exist"
+    when: out.stat.exists == false
+...      

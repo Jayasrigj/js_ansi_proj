@@ -1,0 +1,24 @@
+---
+- name: play to copy file from local server to remote server(s)
+  hosts:
+     - 192.168.1.35
+     - 192.168.1.46
+  become: true   
+  vars: 
+   fname: names.txt
+   dest_dir_name: /opt/ansibles
+  tasks:
+   - name: create dir if it doesnot exist 
+     file:
+      path: "{{dest_dir_name}}"
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+
+   - name: task to copy  {{fname}} from local server {{ansible_hostname}}'s  {{dest_dir_name}}
+     copy:
+      src: "{{fname}}"
+      dest: "{{dest_dir_name}}"
+      backup: yes
+... 

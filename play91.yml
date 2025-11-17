@@ -1,0 +1,34 @@
+---
+- name: play to demonstrate debug
+  hosts: localhost
+  become: true
+  tasks: 
+    - name: debug module
+      debug:
+        msg: "Did you Changed?"
+      changed_when: true  # this make change: true
+     # register: out
+      notify: one_more
+    - name: debug module
+      debug:
+        msg: "Not sure if i am  Changed?"
+      changed_when: true   # this make  make change: true
+      notify: print_me
+    - name: Flush_handlers 
+      meta: flush_handlers 
+    - name: debug module - again 
+      debug:
+       msg: "once again ??"
+      changed_when: true 
+      notify: print_me     
+ # this is second time you are notifying the print_me handler
+ # though you notify multiple times , it runs only once 
+  
+  handlers:
+  - name: print_me
+    debug:
+     msg: " i am in handler"
+  - name: one_more
+    debug:
+     msg: "Yes... I am in handler"
+...   

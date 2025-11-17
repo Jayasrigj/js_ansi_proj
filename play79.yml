@@ -1,0 +1,14 @@
+---
+- name: play to demonstrate synchronize
+  hosts: 192.168.1.42
+  become: true
+  tasks:
+   - name: install rsync if its not there
+     yum:
+      name: rsync
+      state: installed
+   - name: demonstrate synchronize module
+     synchronize:
+      src: /home/ansible/ansible/
+      dest: /home/ansible/playbooks/jsync
+...       

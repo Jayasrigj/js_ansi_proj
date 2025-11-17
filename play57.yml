@@ -1,0 +1,10 @@
+---
+- name: an example playbook using magic variable
+  hosts: all
+  tasks:
+    - name: display the ansible hostname 
+      debug:
+        msg: "host={{ inventory_hostname }}, groups={{ group_names }}, IP={{ ansible_host }}"
+...
+# magic variable are predefined by ansible, always available, provide information about
+# inventory, hosts, playbook execution, and environment.

@@ -1,0 +1,28 @@
+--- 
+- name: to install a package 
+  hosts: localhost 
+  become: true 
+  vars:
+   pkg_name: /home/ansible/ansible/kernel-5.14.0-503.11.1.el9_5.x86_64.rpm
+  tasks: 
+   - name: check if the package exists 
+     stat: 
+      path: /home/ansible/ansible/kernel-5.14.0-503.11.1.el9_5.x86_64.rpm 
+     register: result 
+   - name: Download the package if it doesnt exists 
+     get_url: 
+       url: http://192.168.1.131:81/BaseOS/Packages/kernel-5.14.0-503.11.1.el9_5.x86_64.rpm
+       dest: /home/ansible/ansible/kernel-5.14.0-503.11.1.el9_5.x86_64.rpm 
+     when: not result.stat.exists 
+
+   - name: Chekc if the package exists 
+     stat: 
+      path: /home/ansible/ansible/kernel-5.14.0-503.11.1.el9_5.x86_64.rpm
+     register: result 
+     
+   - name: install the package 
+     yum: 
+      name: "{{pkg_name}}"
+      state: installed 
+     when: result.stat.exists
+... 

@@ -1,0 +1,24 @@
+---
+- name: create a user with given variables
+  hosts: localhost
+  become: yes
+  remote_user: ansible
+  vars_files:
+    - vars/pass.yml
+    - vars/usr_data.yml
+  tasks:
+    - name: "check variable values"
+      debug:
+        msg: "grpname={{ grpname }}, usrname={{ usrname }}, usr_pass={{ usr_pass }}"
+    - name: "create a group {{ grpname }} which will be used as a secondary group for the created user"
+      group:
+        name: "{{ grpname }}"
+        state: present
+    - name: "create {{ usrname }} with secondary group {{ grpname }}"
+      user:
+        name: "{{ usrname }}"
+        password: "{{ usr_pass | password_hash('sha512') }}"
+        update_password: on_create
+        groups: "{{ grpname }}"
+        state: present
+...

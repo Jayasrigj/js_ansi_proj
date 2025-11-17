@@ -1,0 +1,12 @@
+---
+- name: call the script from shell module
+  hosts: [192.168.1.42, 192.168.1.46]
+  become: true
+  tasks:
+  - name: script module to execute on a remote server
+    script: /home/ansible/playbooks/printdf.sh
+...
+#please note that the script module copies a local script file from control node
+# to remote host, the executes it (using shell on remote)
+#this is useful when you already have existing scripts to run on target servers(managed nodes)
+#Go through ansible-doc for more info

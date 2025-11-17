@@ -1,0 +1,12 @@
+--- 
+- name: jinja2 demo
+  hosts: localhost 
+  become: true 
+  vars_files: 
+   - userlist.yml
+  tasks: 
+   - name: take the userlist in to a text file 
+     template: 
+      src: userlist.j2 
+      dest: templates/userlist.j2
+...       

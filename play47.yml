@@ -1,0 +1,27 @@
+---
+- name: play to create multiple users with loop control
+  hosts: localhost
+  become: true
+  remote_user: ansible
+  vars:
+    trainees:
+      - name: jaya
+        gecos: "jaya fusionnex"
+      - name: ashish
+        gecos: "ash alc"
+      - name: sowjjj
+        gecos: "sowjjj alcs"
+      - name: prasanth
+        gecos: " prashh fusnx01"  
+    user_pass: test@123
+
+  tasks:
+    - name: create users with loop structure
+      user:
+        name: "{{ item.name }}"
+        comment: "{{ item.gecos }}"
+        password: "{{ user_pass | password_hash('sha512') }}"
+        state: present
+      loop: "{{ trainees }}"
+...
+#End of the loop

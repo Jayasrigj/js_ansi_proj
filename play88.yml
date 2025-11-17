@@ -1,0 +1,15 @@
+- name: install package and start the service using include_vars nad include_tasks
+#this increase the play modularity
+  hosts: localhost 
+  become: true 
+  tasks: 
+   - name: include variables 
+     include_vars: vars/inclvar.yml
+   - name: include task to install the package 
+     include_tasks: tasks/install_package.yml
+   - name: print it 
+     debug:
+      var: out 
+   - name: include task to start the service 
+     include_tasks: tasks/start_service.yml
+...      

@@ -1,0 +1,11 @@
+---
+- name: play to print variable content using debug module
+  hosts: localhost
+  vars:
+   tname: jayasri
+  become: true
+  tasks:
+   - name: task to demonstrate debug module
+     debug:
+      var: tname
+...       

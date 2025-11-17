@@ -1,0 +1,39 @@
+---
+- name: demonstrate ansible tags 
+  hosts: localhost 
+  become: true 
+  tasks: 
+   - name: task1
+     debug:
+      msg: "task1 - Red Planet"
+     tags: mars 
+   - name: task2
+     debug: 
+      msg: "task2 - Venus Planet"
+     tags: mist 
+   - name: task3
+     debug: 
+      msg: "task3 - Jupiter Planet"
+     tags: mosaic 
+   - name: task4 
+     debug:
+      msg: "task4 - Earth Planet"
+     tags:
+      - blue
+      - green    
+   - name: task5
+     debug:
+      msg: "task5 - i am in always"
+     tags: always
+   - name: task6
+     debug:
+      msg: "task6 - i dont run"
+     tags: never    
+...                    
+#ansible special tags
+#a)always
+#b)never
+#c)all
+#you can invoke multiple tags with --tags tag1, tag2 ...
+#you can invoke all the tags
+#always tags causes the task to always be executed, even if you did not specifiy it --taghs option  

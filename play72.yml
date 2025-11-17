@@ -1,0 +1,13 @@
+---
+- name: play to work with until loop. keep trying the task until it succeeds or till retry count exhausted.
+  hosts: localhost 
+  become: true 
+  tasks:
+   - name: task to wait/retry until service is actve
+     command: systemctl is-active httpd
+     register: out 
+     until: out.stdout == 'active'
+     retries: 4
+     delay: 5
+...      
+#retries 4 times with a delay of 5 seconds until httpd is active      

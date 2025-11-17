@@ -1,0 +1,17 @@
+---
+- name:
+  hosts: localhost 
+  become: true 
+  vars:
+   environ: production
+  tasks: 
+   - name: task to start a webserver 
+     service:
+      name: httpd
+      state: started
+     when: environ == 'production'
+   - name: task to print  messaage
+     debug:
+      msg: " you csn perform this task in environ {{environ}}"
+     when: environ == 'development'
+...  

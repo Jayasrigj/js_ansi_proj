@@ -1,0 +1,14 @@
+---
+- name: test the variables
+  hosts: localhost 
+  vars:
+   my_users:
+    - name: test_user
+      shell: /bin/bash
+    - name: sap_user
+      shell: /bin/ksh
+  tasks:
+   - name: print
+     debug:
+      msg: "{{item.name}}  {{item.shell}}"
+     loop: "{{my_users}}"     

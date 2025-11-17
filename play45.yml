@@ -1,0 +1,17 @@
+---
+- name: play to demonstrate archive
+  hosts: localhost
+  become: true
+  tasks:
+    - name: task to archive server /etc
+      archive:
+        path: /etc
+        dest: /tmp/etc_archive.tar.gz
+        format: gz
+    - name: set permissions on archive
+      file:
+        path: /tmp/etc_archive.tar.gz
+        owner: ansible
+        group: ansible
+        mode: '0600'
+... 

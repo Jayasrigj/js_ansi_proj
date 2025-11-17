@@ -1,0 +1,15 @@
+---
+- name: loop control with with_random_choice. This is used to pick one random item.
+  hosts: localhost
+  become: true
+  tasks:
+    - name: task to use loop structure with with_random_choice
+      debug:
+        msg: "{{ item }}"
+      with_random_choice:
+        - "jaya"
+        - "sowjanya"
+        - "ashish"
+        - "amrutha"
+        - "jk"
+... 

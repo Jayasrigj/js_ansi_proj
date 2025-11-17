@@ -1,0 +1,13 @@
+--- 
+- name: demonstrate raw module
+  # used raw module to execute command 
+  # used to execute command where there is no python installed
+  # such as switches or routers etc...
+  hosts: localhost
+  gather_facts: no
+  become: true
+  tasks:
+    - name: execute command using raw module
+      raw: 
+       uptime > /tmp/u.out
+... 
