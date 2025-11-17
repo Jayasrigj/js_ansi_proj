@@ -1,6 +1,6 @@
 ---
 - name: Create a user on Linux
-  hosts: localhost:wq
+  hosts: localhost
   become: yes
 
   tasks:
