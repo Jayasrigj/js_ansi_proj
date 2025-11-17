@@ -7,5 +7,5 @@
       lineinfile:
         path: /home/ansible/names.txt
         line: "jayasri"
-        insertafter: 7
+        insertafter: 2
 ...
