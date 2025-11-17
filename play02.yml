@@ -1,0 +1,16 @@
+---
+- name: demonstrate file module
+  hosts: localhost
+  become: true
+  tasks:
+    - name: create a soft link
+      file:
+        src: /etc/passwd
+        dest: /etc/passwd0
+        state: link
+        # state: present
+        owner: ansible
+        group: ansible
+        mode: '0644'
+
+...
