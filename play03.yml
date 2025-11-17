@@ -6,6 +6,6 @@
     - name: insert the line after the match
       lineinfile:
         path: /home/ansible/names.txt
-        line: "jayasri"
+        line: "js_git_to_jenkins"
         insertafter: 2
 ...
