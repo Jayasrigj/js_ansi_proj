@@ -1,6 +1,6 @@
 ---
 - name: Play to create a group and then user
-  hosts: sapdev
+  hosts: localhost
   become: true
   tasks:
     - name: Task1 - Create group
