@@ -1,0 +1,28 @@
+---
+- name: Demonstrate lineinfile - example2
+  hosts: localhost
+  become: true
+  connection: local
+
+  tasks:
+    - name: Ensure /home/ansible directory exists
+      file:
+        path: /home/ansible
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: "0755"
+
+    - name: Add the line to statements.txt (create if absent)
+      ansible.builtin.lineinfile:
+        path: /home/ansible/statements.txt
+        line: "Every successful story is also a story of great failures"
+        create: true
+        state: present
+
+    - name: Ensure correct owner/group/mode on file
+      ansible.builtin.file:
+        path: /home/ansible/statements.txt
+        owner: ansible
+        group: ansible
+        mode: "0644"
