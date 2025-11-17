@@ -1,0 +1,36 @@
+
+---
+- name: create a volume group using pv /dev/sde
+  hosts: localhost
+  become: true
+  tasks:
+    - name: create vg
+      lvg:
+        vg: datavg
+        pvs: /dev/sde
+        pesize: 32
+
+    - name: create a volume
+      lvol:
+        vg: datavg
+        lv: datavg01
+        size: 512
+
+    - name: create filesystem
+      filesystem:
+        fstype: xfs
+        dev: /dev/datavg/datavg01
+
+    - name: create mount point if it doesn't exist
+      file:
+        path: /datafs
+        state: directory
+        mode: '0755'
+
+    - name: mount the filesystem
+      mount:
+        path: /datafs
+        src: /dev/datavg/datavg01
+        fstype: xfs
+        state: mounted
+...
