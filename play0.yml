@@ -6,6 +6,6 @@
   tasks:
     - name: Create user
       user:
-        name: ansible_js_01
+        name: ansible_js_02
         password: "{{ 'Password123' | password_hash('sha512') }}"
         state: present
