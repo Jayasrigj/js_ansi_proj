@@ -1,12 +1,12 @@
 ---
-- name: create a volume group using pv /dev/sdb
+- name: create a volume group using pv /dev/sde
   hosts: localhost
   become: true
   tasks:
     - name: create vg
       lvg:
         vg: datavg
-        pvs: /dev/sdb
+        pvs: /dev/sde
         pesize: 32
 
     - name: create a volume
