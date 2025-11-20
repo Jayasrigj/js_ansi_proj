@@ -4,7 +4,7 @@
    become: true
    gather_facts: false
    vars_files:
-     - vars_files/secure-info.yml
+     - secure-info.yml
    tasks:
      - name: Show password from vault
        debug:
