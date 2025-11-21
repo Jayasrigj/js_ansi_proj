@@ -1,9 +1,0 @@
-  tasks:
-    - name: include vault vars from absolute path
-      include_vars:
-        file: /home/ansible/playbooks/vars_files/vault_vars.yml
-
-    - name: Show password from vault
-      debug:
-        msg: "Password from vault is {{ password }}"
-
