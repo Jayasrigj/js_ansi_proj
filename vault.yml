@@ -3,10 +3,26 @@
   hosts: localhost
   gather_facts: false
 
-  vars_files:
-    - vault_vars.yml    # <- encrypted file present in repo
-
   tasks:
+    - name: Ensure vault file exists (debug)
+      stat:
+        path: "{{ playbook_dir }}/vault_vars.yml"
+      register: vault_stat
+
+    - name: Fail early if vault file missing
+      fail:
+        msg: "vault_vars.yml not found in workspace ({{ playbook_dir }})"
+      when: not vault_stat.stat.exists
+
+    - name: include vault vars (encrypted file)
+      include_vars:
+        file: "{{ playbook_dir }}/vault_vars.yml"
+
+    - name: Print whether 'password' exists
+      debug:
+        msg: "password defined? => {{ (password is defined) }}"
+
     - name: Show password from vault
       debug:
         msg: "Password from vault is {{ password }}"
+
