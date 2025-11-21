@@ -1,6 +1,76 @@
 ---
-- name: Launch EC2 instance (inline tasks)
+- name: Launch EC2 instance (inline tasks, resilient defaults)
   hosts: localhost
   connection: local
   gather_facts: false
+
+  # sensible fallback defaults; -e can override all of these
+  vars:
+    default_region: "us-east-1"
+    default_instance_type: "t3.micro"
+    default_ami_id: "ami-0cae6d6fe6048ca2c"
+    default_vpc_subnet_id: "subnet-083f3f060e325a588"
+    default_security_group: "sg-0fbc6f22064b9e8c9"
+    default_key_name: "jenkins"
+    default_instance_name: "jenkins-ec2-from-ansible"
+    default_count: 1
+    default_assign_public_ip: true
+
+  pre_tasks:
+    - name: Build effective variables (use provided vars or fall back to defaults)
+      set_fact:
+        region: "{{ region | default(default_region) }}"
+        instance_type: "{{ instance_type | default(default_instance_type) }}"
+        ami_id: "{{ ami_id | default(default_ami_id) }}"
+        vpc_subnet_id: "{{ vpc_subnet_id | default(default_vpc_subnet_id) }}"
+        security_group: "{{ security_group | default(default_security_group) }}"
+        key_name: "{{ key_name | default(default_key_name) }}"
+        instance_name: "{{ instance_name | default(default_instance_name) }}"
+        count: "{{ count | default(default_count) | int }}"
+        assign_public_ip: "{{ assign_public_ip | default(default_assign_public_ip) }}"
+
+    - name: Show values that will be used (non-sensitive)
+      debug:
+        msg:
+          - "region={{ region }}"
+          - "ami_id={{ ami_id }}"
+          - "vpc_subnet_id={{ vpc_subnet_id }}"
+          - "security_group={{ security_group }}"
+          - "key_name={{ key_name }}"
+          - "instance_type={{ instance_type }}"
+          - "count={{ count }}"
+
+  tasks:
+    - name: Ensure amazon.aws collection is available (no-op if installed)
+      ansible.builtin.command:
+        cmd: ansible-galaxy collection list amazon.aws
+      register: col_check
+      failed_when: false
+      changed_when: false
+
+    - name: Launch EC2 instance (uses fallbacks if vars missing)
+      amazon.aws.ec2_instance:
+        region: "{{ region }}"
+        instance_type: "{{ instance_type }}"
+        image_id: "{{ ami_id }}"
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        security_group: "{{ security_group }}"
+        key_name: "{{ key_name }}"
+        wait: true
+        count: "{{ count }}"
+        network:
+          assign_public_ip: "{{ assign_public_ip }}"
+        tags:
+          Name: "{{ instance_name }}"
+      register: ec2_output
+      failed_when: ec2_output is failed  # surface module errors (AWS auth etc.)
+
+    - name: Show EC2 module output
+      debug:
+        var: ec2_output
+
+    - name: Friendly message if instances created
+      debug:
+        msg: >-
+          Created {{ (ec2_output.instances | default([])) | length }} instance(s).
 
