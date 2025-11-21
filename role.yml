@@ -1,8 +1,9 @@
 ---
-- name: Launch EC2 instance using role
+- name: Launch EC2 instance (inline tasks)
   hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: false
 
-  roles:
-    - ec2_instance
+  tasks:
+    - include_tasks: roles/ec2_instance/tasks/main.yml
+
