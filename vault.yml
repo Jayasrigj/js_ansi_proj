@@ -1,26 +1,7 @@
----
-- name: pulling vault through jenkins
-  hosts: localhost
-  gather_facts: false
-
   tasks:
-    - name: Ensure vault file exists (debug)
-      stat:
-        path: "{{ playbook_dir }}/vault_vars.yml"
-      register: vault_stat
-
-    - name: Fail early if vault file missing
-      fail:
-        msg: "vault_vars.yml not found in workspace ({{ playbook_dir }})"
-      when: not vault_stat.stat.exists
-
-    - name: include vault vars (encrypted file)
+    - name: include vault vars from absolute path
       include_vars:
-        file: "{{ playbook_dir }}/vault_vars.yml"
-
-    - name: Print whether 'password' exists
-      debug:
-        msg: "password defined? => {{ (password is defined) }}"
+        file: /home/ansible/playbooks/vars_files/vault_vars.yml
 
     - name: Show password from vault
       debug:
