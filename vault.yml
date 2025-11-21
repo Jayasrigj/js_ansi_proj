@@ -4,7 +4,7 @@
   gather_facts: false
 
   vars_files:
-    - ansible-vault
+    - vault_vars.yml    # <- encrypted file present in repo
 
   tasks:
     - name: Show password from vault
