@@ -1,12 +1,12 @@
 ---
- - name: pulling vault through jenkins
-   hosts: localhost
-   become: true
-   gather_facts: false
-   vars_files:
-     - secure-info.yml
-   tasks:
-     - name: Show password from vault
-       debug:
-         msg: "The password is {{ password }}"
-...
+- name: pulling vault through jenkins
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - vault_vars.yml
+
+  tasks:
+    - name: Show password from vault
+      debug:
+        msg: "Password from vault is {{ password }}"
