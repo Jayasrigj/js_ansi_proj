@@ -5,5 +5,23 @@
   gather_facts: false
 
   tasks:
-    - include_tasks: roles/ec2_instance/tasks/main.yml
+    - name: Launch EC2 instance
+      amazon.aws.ec2_instance:
+        region: "{{ region }}"
+        instance_type: "{{ instance_type }}"
+        image_id: "{{ ami_id }}"
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        security_group: "{{ security_group }}"
+        key_name: "{{ key_name }}"
+        wait: yes
+        count: "{{ count | int }}"
+        network:
+          assign_public_ip: "{{ assign_public_ip }}"
+        tags:
+          Name: "{{ instance_name }}"
+      register: ec2_output
+
+    - name: Show EC2 module output
+      debug:
+        var: ec2_output
 
